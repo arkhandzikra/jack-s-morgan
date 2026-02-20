@@ -2,7 +2,7 @@ let total = 0;
 
 let keranjang = JSON.parse(localStorage.getItem("keranjang")) || {};
 let laporan = JSON.parse(localStorage.getItem("laporan")) || {
-    coklat: 0,
+    chocolate: 0,
     mojito: 0,
     omzet: 0
 };
@@ -116,7 +116,7 @@ function bayar() {
         let snapshot = JSON.parse(JSON.stringify(keranjang));
 
         for (let nama in snapshot) {
-            if (nama.includes("Coklat")) laporan.coklat += snapshot[nama].qty;
+            if (nama.includes("Chocolate")) laporan.chocolate += snapshot[nama].qty;
             if (nama.includes("Mojito")) laporan.mojito += snapshot[nama].qty;
         }
 
@@ -170,7 +170,7 @@ function tutupStruk() {
 // UPDATE LAPORAN
 // ===============================
 function updateLaporan() {
-    document.getElementById("lapCoklat").innerText = laporan.coklat;
+    document.getElementById("lapChocolate").innerText = laporan.chocolate;
     document.getElementById("lapMojito").innerText = laporan.mojito;
     document.getElementById("lapOmzet").innerText = formatRupiah(laporan.omzet);
 }
@@ -180,7 +180,7 @@ function updateLaporan() {
 // ===============================
 function resetLaporan() {
 
-    laporan = { coklat: 0, mojito: 0, omzet: 0 };
+    laporan = { chocolate: 0, mojito: 0, omzet: 0 };
     keranjang = {};
 
     localStorage.removeItem("keranjang");
@@ -214,7 +214,7 @@ function tutupKasir() {
         ["Tanggal", today.toLocaleDateString("id-ID")],
         [],
         ["Menu", "Jumlah Terjual"],
-        ["Coklat", laporan.coklat],
+        ["Chocolate", laporan.chocolate],
         ["Mojito", laporan.mojito],
         [],
         ["TOTAL OMZET", laporan.omzet]
@@ -226,7 +226,7 @@ function tutupKasir() {
 
     XLSX.writeFile(wb, `Laporan_Kasir_${tanggalFile}.xlsx`);
 
-    laporan = { coklat: 0, mojito: 0, omzet: 0 };
+    laporan = { chocolate: 0, mojito: 0, omzet: 0 };
     saveData();
     updateLaporan();
 }
@@ -242,4 +242,5 @@ document.getElementById("uangBayar").addEventListener("input", function (e) {
 // Load awal
 renderTable();
 updateLaporan();
+
 resetKembalian();
