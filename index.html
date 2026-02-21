@@ -34,9 +34,26 @@
 
     <h2>Total: Rp <span id="total">0</span></h2>
 
+    <div class="payment-method">
+    <label>
+        <input type="radio" name="metode" value="cash" checked>
+        Cash
+    </label>
+    <label>
+        <input type="radio" name="metode" value="qris">
+        QRIS
+    </label>
+    </div>
+
     <div class="bayar-section">
-        <input type="text" id="uangBayar" placeholder="Uang Bayar">
-        <button onclick="bayar()">Bayar</button>
+    <input type="text" id="uangBayar" placeholder="Masukkan uang">
+    <button onclick="bayar()">Bayar</button>
+    </div>
+
+<!-- QRIS AREA -->
+    <div id="qrisSection" class="qris-section" style="display:none;">
+    <img src="qris.jpeg" alt="QRIS Payment" class="qris-img">
+    <button onclick="konfirmasiQRIS()">Konfirmasi Pembayaran</button>
     </div>
 
     <h3>Kembalian: Rp <span id="kembalian">0</span></h3>
@@ -46,6 +63,8 @@
         <p>Chocolate Ice: <span id="lapChocolateIce">0</span></p>
         <p>Chocolate Hot: <span id="lapChocolateHot">0</span></p>
         <p>Mojito: <span id="lapMojito">0</span></p>
+        <p>Cash : <span id="lapCash"></span></p>
+        <p>QRIS : <span id="lapQris"></span></p>
         <p>Total Omzet: Rp <span id="lapOmzet">0</span></p>
     </div>
 
@@ -70,6 +89,7 @@
             <p id="strukKembali"></p>
             <hr>
             <p class="thanks">Terima Kasih 🙏</p>
+            <p id="strukMetode"></p>
             <button onclick="tutupStruk()" class="tutup-struk-btn">
                 Tutup Struk
             </button>
