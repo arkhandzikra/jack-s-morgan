@@ -5,6 +5,10 @@ let laporan = JSON.parse(localStorage.getItem("laporan")) || {
     chocolateIce: { qty: 0, subtotal: 0 },
     chocolateHot: { qty: 0, subtotal: 0 },
     mojito: { qty: 0, subtotal: 0 },
+
+    cash: { total: 0, transaksi: 0 },
+    qris: { total: 0, transaksi: 0 },
+
     omzet: 0
 };
 
@@ -137,11 +141,13 @@ function bayar() {
 }
 
         laporan.omzet += total;
+        laporan.cash.total += total;
+        laporan.cash.transaksi += 1;
 
         saveData();
         updateLaporan();
 
-        generateStruk(uang, kembali, snapshot);
+        generateStruk(uang, kembali, snapshot, "CASH");
 
         keranjang = {};
         renderTable();
@@ -154,9 +160,79 @@ function bayar() {
 }
 
 // ===============================
+// METODE PEMBAYARAN
+// ===============================
+
+document.querySelectorAll('input[name="metode"]').forEach(radio=>{
+    radio.addEventListener("change", function(){
+        if(this.value === "qris"){
+            document.getElementById("uangBayar").style.display="none";
+            document.getElementById("qrisSection").style.display="block";
+        }else{
+            document.getElementById("uangBayar").style.display="block";
+            document.getElementById("qrisSection").style.display="none";
+        }
+    });
+});
+
+// ===============================
+// KONFIRMASI QRIS
+// ===============================
+
+function konfirmasiQRIS(){
+
+    if (Object.keys(keranjang).length === 0) {
+        alert("Belum ada pesanan!");
+        return;
+    }
+
+    let uang = total;
+    let kembali = 0;
+
+    document.getElementById("kembalian").innerText = "0";
+
+    let snapshot = JSON.parse(JSON.stringify(keranjang));
+
+    for (let nama in snapshot) {
+        let item = snapshot[nama];
+        let subtotal = item.harga * item.qty;
+
+        if (nama === "Chocolate Ice") {
+            laporan.chocolateIce.qty += item.qty;
+            laporan.chocolateIce.subtotal += subtotal;
+        }
+
+        if (nama === "Chocolate Hot") {
+            laporan.chocolateHot.qty += item.qty;
+            laporan.chocolateHot.subtotal += subtotal;
+        }
+
+        if (nama === "Mojito") {
+            laporan.mojito.qty += item.qty;
+            laporan.mojito.subtotal += subtotal;
+        }
+    }
+
+    laporan.omzet += total;
+    laporan.qris.total += total;
+    laporan.qris.transaksi += 1;
+
+    saveData();
+    updateLaporan();
+
+    generateStruk(uang, kembali, snapshot, "QRIS");
+
+    keranjang = {};
+    renderTable();
+    saveData();
+
+    document.getElementById("qrisSection").style.display="none";
+}
+
+// ===============================
 // STRUK
 // ===============================
-function generateStruk(uang, kembali, dataKeranjang) {
+function generateStruk(uang, kembali, dataKeranjang, metode = "CASH") {
 
     document.getElementById("strukContainer").style.display = "flex";
     document.getElementById("strukTanggal").innerText =
@@ -170,12 +246,18 @@ function generateStruk(uang, kembali, dataKeranjang) {
     }
 
     document.getElementById("strukIsi").innerHTML = isi;
+
     document.getElementById("strukTotal").innerText =
         "Total : Rp " + formatRupiah(total);
+
     document.getElementById("strukBayar").innerText =
         "Bayar : Rp " + formatRupiah(uang);
+
     document.getElementById("strukKembali").innerText =
         "Kembali : Rp " + formatRupiah(kembali);
+
+    document.getElementById("strukMetode").innerText =
+        "Metode : " + metode;
 }
 
 function tutupStruk() {
@@ -201,6 +283,14 @@ function updateLaporan() {
 
     document.getElementById("lapOmzet").innerText =
         formatRupiah(laporan.omzet);
+
+    document.getElementById("lapCash").innerText =
+        laporan.cash.transaksi + " transaksi (Rp " +
+        formatRupiah(laporan.cash.total) + ")";
+
+    document.getElementById("lapQris").innerText =
+        laporan.qris.transaksi + " transaksi (Rp " +
+        formatRupiah(laporan.qris.total) + ")";
 }
 
 // ===============================
@@ -213,10 +303,14 @@ function resetLaporan() {
 
     // Reset ke struktur data yang BENAR
     laporan = {
-        chocolateIce: { qty: 0, subtotal: 0 },
-        chocolateHot: { qty: 0, subtotal: 0 },
-        mojito: { qty: 0, subtotal: 0 },
-        omzet: 0
+    chocolateIce: { qty: 0, subtotal: 0 },
+    chocolateHot: { qty: 0, subtotal: 0 },
+    mojito: { qty: 0, subtotal: 0 },
+
+    cash: { total: 0, transaksi: 0 },
+    qris: { total: 0, transaksi: 0 },
+
+    omzet: 0
     };
     keranjang = {};
 
@@ -247,42 +341,103 @@ function tutupKasir() {
         String(today.getDate()).padStart(2, '0');
 
     let data = [
-    ["LAPORAN KASIR HARIAN"],
-    ["Tanggal", today.toLocaleDateString("id-ID")],
-    [],
-    ["Menu", "Qty Terjual", "Subtotal"],
-    [
-        "Chocolate Ice",
-        laporan.chocolateIce.qty,
-        laporan.chocolateIce.subtotal
-    ],
-    [
-        "Chocolate Hot",
-        laporan.chocolateHot.qty,
-        laporan.chocolateHot.subtotal
-    ],
-    [
-        "Mojito",
-        laporan.mojito.qty,
-        laporan.mojito.subtotal
-    ],
-    [],
-    ["TOTAL OMZET", "", laporan.omzet]
-];
+        ["LAPORAN KASIR HARIAN"],
+        ["Tanggal", today.toLocaleDateString("id-ID")],
+        [],
+        ["REKAP MENU"],
+        ["Menu", "Qty Terjual", "Subtotal (Rp)"],
+        ["Chocolate Ice", laporan.chocolateIce.qty, laporan.chocolateIce.subtotal],
+        ["Chocolate Hot", laporan.chocolateHot.qty, laporan.chocolateHot.subtotal],
+        ["Mojito", laporan.mojito.qty, laporan.mojito.subtotal],
+        [],
+        ["REKAP METODE PEMBAYARAN"],
+        ["Metode", "Jumlah Transaksi", "Total (Rp)"],
+        ["Cash", laporan.cash.transaksi, laporan.cash.total],
+        ["QRIS", laporan.qris.transaksi, laporan.qris.total],
+        [],
+        ["TOTAL OMZET", "", laporan.omzet]
+    ];
 
     let ws = XLSX.utils.aoa_to_sheet(data);
+
+    // ===============================
+    // MERGE TITLE
+    // ===============================
+    ws["!merges"] = [
+        { s: { r: 0, c: 0 }, e: { r: 0, c: 2 } } // Merge A1:C1
+    ];
+
+    // ===============================
+    // STYLE TITLE
+    // ===============================
+    ws["A1"].s = {
+        font: { bold: true, sz: 16 },
+        alignment: { horizontal: "center" }
+    };
+
+    // ===============================
+    // STYLE HEADER
+    // ===============================
+    function styleHeader(row) {
+        for (let col = 0; col < 3; col++) {
+            let cell = XLSX.utils.encode_cell({ r: row, c: col });
+            if (ws[cell]) {
+                ws[cell].s = {
+                    font: { bold: true },
+                    fill: { fgColor: { rgb: "E5E7EB" } }
+                };
+            }
+        }
+    }
+
+    styleHeader(4);  // Header Rekap Menu
+    styleHeader(10); // Header Rekap Metode
+
+    // ===============================
+    // FORMAT ANGKA RUPIAH
+    // ===============================
+    function formatNumber(rowStart, rowEnd, col) {
+        for (let r = rowStart; r <= rowEnd; r++) {
+            let cell = XLSX.utils.encode_cell({ r: r, c: col });
+            if (ws[cell]) {
+                ws[cell].z = "#,##0";
+            }
+        }
+    }
+
+    formatNumber(5,7,2);  // Subtotal Menu
+    formatNumber(11,12,2); // Total Metode
+    formatNumber(14,14,2); // Total Omzet
+
+    // ===============================
+    // AUTO WIDTH
+    // ===============================
+    ws["!cols"] = [
+        { wch: 25 },
+        { wch: 20 },
+        { wch: 20 }
+    ];
+
+    // ===============================
+    // AUTOFILTER MENU TABLE
+    // ===============================
+    ws["!autofilter"] = { ref: "A5:C8" };
+
     let wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "Laporan");
 
     XLSX.writeFile(wb, `Laporan_Kasir_${tanggalFile}.xlsx`);
 
-    // Reset ke struktur data yang BENAR setelah direkap
+    // RESET
     laporan = {
         chocolateIce: { qty: 0, subtotal: 0 },
         chocolateHot: { qty: 0, subtotal: 0 },
         mojito: { qty: 0, subtotal: 0 },
+        cash: { total: 0, transaksi: 0 },
+        qris: { total: 0, transaksi: 0 },
         omzet: 0
     };
+
     saveData();
     updateLaporan();
 }
@@ -294,6 +449,23 @@ document.getElementById("uangBayar").addEventListener("input", function (e) {
     let angka = e.target.value.replace(/\D/g, '');
     e.target.value = angka ? formatRupiah(parseInt(angka)) : "";
 });
+
+// ===============================
+// METODE PEMBAYARAN (TARUH DI SINI)
+// ===============================
+
+document.querySelectorAll('input[name="metode"]').forEach(radio=>{
+    radio.addEventListener("change", function(){
+        if(this.value === "qris"){
+            document.getElementById("uangBayar").style.display="none";
+            document.getElementById("qrisSection").style.display="flex";
+        }else{
+            document.getElementById("uangBayar").style.display="block";
+            document.getElementById("qrisSection").style.display="none";
+        }
+    });
+});
+
 
 // Load awal
 renderTable();
