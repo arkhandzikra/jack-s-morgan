@@ -594,9 +594,8 @@ body::after{
     border-radius: 50px !important;
 }
 
-/* ================= ULTRA PREMIUM LOGIN ================= */
-
-.login-page{
+/* ================= ULTRA PREMIUM LOGIN FIX ================= */
+.login-page {
     position: fixed;
     inset: 0;
     background: radial-gradient(circle at top left,#1e3a8a,#0f172a 60%);
@@ -605,63 +604,41 @@ body::after{
     align-items: center;
     z-index: 9999;
     overflow: hidden;
+    touch-action: none; /* Mencegah scroll yang tidak diinginkan di login */
 }
 
-/* Floating glow */
+/* Dekorasi cahaya - Ditambah pointer-events: none agar tidak menghalangi klik */
 .login-page::before,
-.login-page::after{
-    content:"";
-    position:absolute;
-    width:600px;
-    height:600px;
-    border-radius:50%;
-    filter:blur(150px);
-    opacity:0.2;
+.login-page::after {
+    content: "";
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    filter: blur(150px);
+    opacity: 0.2;
     animation: floatLight 20s infinite alternate ease-in-out;
+    pointer-events: none; /* PENTING: Supaya klik jari tembus ke input */
+    z-index: 1;
 }
 
-.login-page::before{
-    background:#3b82f6;
-    top:-200px;
-    left:-200px;
-}
-
-.login-page::after{
-    background:#9333ea;
-    bottom:-200px;
-    right:-200px;
-}
-
-@keyframes floatLight{
-    from{ transform: translateY(0) scale(1);}
-    to{ transform: translateY(80px) scale(1.2);}
-}
-
-/* Card */
-.login-box{
-    width:360px;
-    padding:50px 40px;
-    border-radius:35px;
-
+.login-box {
+    position: relative;
+    z-index: 10; /* Pastikan box di atas cahaya */
+    width: 360px;
+    max-width: 90%; /* Agar tidak terpotong di layar HP kecil */
+    padding: 40px 30px;
+    border-radius: 35px;
     background: rgba(255,255,255,0.08);
     backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
     border: 1px solid rgba(255,255,255,0.15);
-
     box-shadow: 0 50px 100px rgba(0,0,0,0.6);
-
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:18px;
-
-    animation: fadeSlide .8s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
 }
-
-@keyframes fadeSlide{
-    from{opacity:0; transform:translateY(40px);}
-    to{opacity:1; transform:translateY(0);}
-}
-
 /* Logo */
 .login-logo{
     width:70px;
@@ -689,15 +666,18 @@ body::after{
 }
 
 /* Input */
-.login-box input{
-    width:100%;
-    padding:14px 20px;
-    border-radius:50px;
-    border:1px solid rgba(255,255,255,0.15);
-    background:rgba(255,255,255,0.1);
-    color:white;
-    outline:none;
-    text-align:center;
+.login-box input {
+    width: 100%;
+    padding: 14px 20px;
+    border-radius: 50px;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.1);
+    color: white;
+    outline: none;
+    text-align: center;
+    font-size: 16px; /* Standar mobile agar tidak auto-zoom */
+    position: relative;
+    z-index: 11;
 }
 
 .login-box input:focus{
@@ -772,7 +752,6 @@ body::after{
 
 .delete-btn:active{
     transform: scale(0.9);
-
 }
 
 /* Menyejajarkan judul struk ke kiri */
