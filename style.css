@@ -1,0 +1,1281 @@
+/* ===============================
+   CLEAN LIQUID GLASS PREMIUM POS
+=================================*/
+
+*{
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+    color: white;
+    overflow-x: hidden;
+    position: relative;
+    
+    /* Dark Gradient dengan Noise Effect */
+    background: linear-gradient(135deg, #0b0f17 0%, #1a1f2f 100%);
+    position: relative;
+}
+
+/* Efek noise/grain */
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJmIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjc0IiBudW1PY3RhdmVzPSIzIiAvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbHRlcj0idXJsKCNmKSIgb3BhY2l0eT0iMC4wNSIgLz48L3N2Zz4=');
+    opacity: 0.15;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Efek cahaya lembut */
+body::after {
+    content: "";
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle at 30% 40%, rgba(59, 130, 246, 0.2), transparent 70%);
+    top: -200px;
+    left: -200px;
+    filter: blur(80px);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.container {
+    position: relative;
+    z-index: 1;
+}
+
+/* ===============================
+   MAIN CONTAINER
+=================================*/
+
+.container {
+    width: 100%;
+    max-width: 1000px;
+    padding: 40px;
+    border-radius: 30px;
+
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+}
+
+/* ===============================
+   TITLE
+=================================*/
+
+h1{
+    text-align: center;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 35px;
+    opacity: 0.9;
+}
+
+/* ===============================
+   MENU BUTTONS
+=================================*/
+
+.menu-buttons{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.menu-buttons button{
+    padding: 12px 26px;
+    border-radius: 50px;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.08);
+    color: white;
+    cursor: pointer;
+    transition: all .3s ease;
+}
+
+.menu-buttons button:hover{
+    background: rgba(255,255,255,0.2);
+    transform: translateY(-4px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+}
+
+/* ===============================
+   TABLE
+=================================*/
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed; /* Tambahkan baris ini agar lebar tabel stabil */
+}
+
+thead{
+    background: rgba(255,255,255,0.08);
+}
+
+th{
+    padding: 14px;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.8;
+}
+
+td{
+    padding: 18px 12px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+tbody tr{
+    transition: 0.2s ease;
+}
+
+tbody tr:hover{
+    background: rgba(255,255,255,0.05);
+}
+
+/* ALIGN */
+th:nth-child(1), td:nth-child(1) { width: 35%; text-align: left; }
+th:nth-child(2), td:nth-child(2) { width: 18%; text-align: center; } /* Diubah ke center agar lebih rapi */
+th:nth-child(3), td:nth-child(3) { width: 16%; text-align: center; }
+th:nth-child(4), td:nth-child(4) { width: 18%; text-align: center; } /* Diubah ke center agar lebih rapi */
+th:nth-child(5), td:nth-child(5) { width: 13%; text-align: center; }
+
+/* QTY BUTTON */
+
+td:nth-child(3) button{
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    border: none;
+    background: rgba(255,255,255,0.15);
+    color: white;
+    cursor: pointer;
+    margin: 0 6px;
+    transition: 0.2s;
+}
+
+td:nth-child(3) button:hover{
+    background: #3b82f6;
+}
+
+/* ===============================
+   TOTAL
+=================================*/
+
+h2{
+    text-align: right;
+    margin-top: 30px;
+    font-weight: 600;
+}
+
+/* ===============================
+   BAYAR SECTION
+=================================*/
+
+.bayar-section{
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.bayar-section input{
+    flex: 1;
+    padding: 14px 20px;
+    border-radius: 50px;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.08);
+    color: white;
+    outline: none;
+}
+
+.bayar-section input::placeholder{
+    color: rgba(255,255,255,0.5);
+}
+
+.bayar-section button{
+    padding: 14px 30px;
+    border-radius: 50px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s ease;
+    background: linear-gradient(135deg,#22c55e,#16a34a);
+    color: white;
+}
+
+.bayar-section button:hover{
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px rgba(34,197,94,0.4);
+}
+
+/* ===============================
+   KEMBALIAN
+=================================*/
+
+h3{
+    text-align: right;
+    margin-top: 15px;
+}
+
+/* ===============================
+   LAPORAN
+=================================*/
+
+.laporan{
+    margin-top: 35px;
+    padding: 25px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.laporan h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-align: left; /* Judul tetap di tengah atau ganti 'left' jika ingin kiri juga */
+    color: #9bf6ff;
+}
+
+/* ===============================
+   ACTION BUTTONS
+=================================*/
+
+.action-buttons{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.action-buttons button{
+    padding: 12px 30px;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.tutup-btn{
+    background: linear-gradient(135deg,#ef4444,#dc2626);
+    color: white;
+}
+
+.reset-btn{
+    background: rgba(255,255,255,0.15);
+    color: white;
+}
+
+.action-buttons button:hover{
+    transform: translateY(-3px);
+}
+
+/* ===============================
+   STRUK LIQUID GLASS PREMIUM
+=================================*/
+
+.struk-container {
+    margin-top: 40px;
+    display: none;
+    justify-content: center;
+    width: 100%;
+    perspective: 1000px;
+}
+
+.struk-card {
+    width: 400px;
+    max-width: 100%;
+    padding: 30px;
+    
+    /* Liquid Glass Effect */
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 30px;
+    
+    /* Shadow & Depth */
+    box-shadow: 
+        0 25px 50px -12px rgba(0, 0, 0, 0.25),
+        inset 0 1px 2px rgba(255, 255, 255, 0.6),
+        inset 0 -2px 2px rgba(0, 0, 0, 0.1);
+    
+    color: white;
+    font-family: 'Courier New', monospace;
+    
+    /* Animasi */
+    animation: glassFloat 0.5s ease-out;
+    transform-style: preserve-3d;
+}
+
+@keyframes glassFloat {
+    0% {
+        opacity: 0;
+        transform: translateY(20px) rotateX(-5deg);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) rotateX(0);
+    }
+}
+
+/* Glass Reflection Effect */
+.struk-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -50%;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    transform: skewX(-20deg);
+    animation: glassShine 8s infinite;
+    pointer-events: none;
+    border-radius: 30px;
+}
+
+@keyframes glassShine {
+    0% {
+        left: -50%;
+        opacity: 0;
+    }
+    20% {
+        opacity: 0.5;
+    }
+    40% {
+        left: 150%;
+        opacity: 0;
+    }
+    100% {
+        left: 150%;
+        opacity: 0;
+    }
+}
+
+/* Header Struk */
+.struk-header {
+    text-align: center;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.struk-header h2 {
+    font-size: 28px;
+    margin: 0 0 10px 0;
+    font-family: 'Segoe UI', sans-serif;
+    font-weight: 700;
+    
+    /* Text Glass Effect - DIPERBAIKI */
+    background: linear-gradient(135deg, #ffffff, #e0e7ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 2px 10px rgba(59, 130, 246, 0.3);
+}
+
+.struk-header p {
+    margin: 5px 0;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.8);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.struk-header .store-address {
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.struk-header .transaction-no {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 5px 15px;
+    border-radius: 50px;
+    display: inline-block;
+    margin: 10px 0 5px;
+    font-weight: 600;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(5px);
+}
+
+/* Garis Pemisah Glass */
+.struk-card hr {
+    border: none;
+    height: 2px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        rgba(255, 255, 255, 0.5),
+        rgba(255, 255, 255, 0.3),
+        transparent
+    );
+    margin: 20px 0;
+}
+
+/* Items Section */
+.struk-items {
+    margin: 20px 0;
+}
+
+.item-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 14px;
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.item-row:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateX(5px);
+}
+
+.item-name {
+    flex: 2;
+    text-align: left;
+    font-weight: 500;
+}
+
+.item-qty {
+    flex: 0.5;
+    text-align: center;
+    font-weight: 600;
+    color: #93c5fd;
+}
+
+.item-price {
+    flex: 1;
+    text-align: right;
+    font-weight: 600;
+    color: #bbf7d0;
+}
+
+.item-sub {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.5);
+    margin-top: -5px;
+    margin-bottom: 15px;
+    padding-left: 12px;
+    text-align: right;
+    font-style: italic;
+}
+
+/* Total Section */
+.total-section {
+    margin: 20px 0;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.total-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 14px;
+    padding: 5px 0;
+}
+
+.grand-total {
+    font-weight: bold;
+    font-size: 20px;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 2px solid rgba(255, 255, 255, 0.3);
+    color: #fcd34d;
+    text-shadow: 0 0 10px rgba(252, 211, 77, 0.3);
+}
+
+/* Metode Pembayaran Badge */
+.payment-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+.payment-badge.cash {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+}
+
+.payment-badge.qris {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: white;
+}
+
+/* Thanks Section - DIPERBAIKI */
+.thanks {
+    text-align: center;
+    margin: 25px 0 15px;
+    position: relative;
+}
+
+.thanks p {
+    font-size: 18px;
+    font-weight: 600;
+    background: linear-gradient(135deg, #fcd34d, #fbbf24);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 8px;
+    text-shadow: 0 2px 10px rgba(251, 191, 36, 0.3);
+}
+
+.thanks small {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.4);
+    display: block;
+    letter-spacing: 0.5px;
+}
+
+/* Tombol Tutup Struk Glass */
+.tutup-struk-btn {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 50px;
+    
+    /* Glass Button Effect */
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    margin-top: 20px;
+}
+
+.tutup-struk-btn:hover {
+    background: rgba(59, 130, 246, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+    border-color: rgba(59, 130, 246, 0.5);
+}
+
+.tutup-struk-btn:active {
+    transform: translateY(0);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .struk-card {
+        padding: 20px;
+        border-radius: 25px;
+    }
+    
+    .struk-header h2 {
+        font-size: 24px;
+    }
+    
+    .item-row {
+        font-size: 12px;
+        padding: 6px 10px;
+    }
+    
+    .grand-total {
+        font-size: 18px;
+    }
+}
+
+/* Efek Glass Tambahan untuk Elemen Tertentu */
+.struk-card .label {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.struk-card .value {
+    color: white;
+    font-weight: 600;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* QRIS Badge Khusus */
+.qris-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    border-radius: 50px;
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+/* ===============================
+   FULL MOBILE OPTIMIZATION
+=================================*/
+
+@media (max-width:768px){
+
+    *{
+        box-sizing: border-box;
+    }
+
+    body{
+        padding: 15px 10px;
+        overflow-x: hidden;
+    }
+
+    .container{
+        width: 100%;
+        max-width: 100%;
+        padding: 20px;
+        border-radius: 20px;
+    }
+
+    h1{
+        font-size: 20px;
+        text-align: center;
+    }
+
+    /* MENU BUTTON */
+    .menu-buttons{
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .menu-buttons button{
+        width: 100%;
+    }
+
+    /* TABLE WRAP */
+    table{
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        white-space: nowrap;
+        font-size: 14px;
+    }
+
+    /* TOTAL & KEMBALIAN */
+    h2, h3{
+        text-align: left;
+        font-size: 16px;
+    }
+
+    /* BAYAR */
+    .bayar-section{
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .bayar-section input,
+    .bayar-section button{
+        width: 100%;
+    }
+
+    /* PAYMENT METHOD */
+    .payment-method{
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+    }
+
+    .payment-method label{
+        width: 100%;
+        text-align: center;
+    }
+
+    /* LAPORAN */
+    .laporan{
+        padding: 15px;
+        font-size: 14px;
+    }
+
+    /* ACTION BUTTON */
+    .action-buttons{
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .action-buttons button{
+        width: 100%;
+    }
+
+    /* STRUK AREA */
+    .struk-container{
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .struk-card{
+        width: 100%;
+        max-width: 320px;
+    }
+
+    .struk-img{
+        display: none;
+    }
+}
+
+/* ===============================
+   PAYMENT METHOD
+=================================*/
+
+.payment-method{
+    display:flex;
+    gap:20px;
+    margin-top:15px;
+    justify-content:center;
+}
+
+.payment-method label{
+    background: rgba(255,255,255,0.08);
+    padding:10px 18px;
+    border-radius:30px;
+    cursor:pointer;
+    border:1px solid rgba(255,255,255,0.1);
+}
+
+.payment-method input{
+    margin-right:6px;
+}
+
+/* ===============================
+   QRIS SECTION - PREMIUM FIX
+=================================*/
+
+.qris-section {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 25px;
+    gap: 20px;
+}
+
+/* Container untuk QRIS image */
+.qris-image-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.qris-img {
+    width: 280px !important;
+    max-width: 100% !important;
+    height: auto !important;
+    border-radius: 25px !important;
+    padding: 20px !important;
+    background: white !important;
+    box-shadow: 
+        0 25px 40px -15px rgba(0, 0, 0, 0.4),
+        inset 0 2px 5px rgba(255, 255, 255, 0.5) !important;
+    transition: all 0.3s ease !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+.qris-img:hover {
+    transform: scale(1.02);
+    box-shadow: 0 30px 50px -15px rgba(59, 130, 246, 0.5) !important;
+}
+
+/* Container untuk tombol */
+.qris-button-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.qris-section button {
+    width: 280px !important;
+    max-width: 100% !important;
+    padding: 16px 0 !important;
+    border-radius: 50px !important;
+    border: none !important;
+    
+    /* Glass effect untuk tombol */
+    background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
+    color: white !important;
+    font-weight: 600 !important;
+    font-size: 16px !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    
+    box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.5) !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    letter-spacing: 0.5px !important;
+}
+
+.qris-section button:hover {
+    transform: translateY(-3px) !important;
+    box-shadow: 0 20px 35px -5px rgba(59, 130, 246, 0.7) !important;
+    background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+}
+
+.qris-section button:active {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 15px 25px -5px rgba(59, 130, 246, 0.6) !important;
+}
+
+/* Info tambahan untuk QRIS */
+.qris-info {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 12px;
+    margin-top: -5px;
+    margin-bottom: 5px;
+    font-style: italic;
+}
+
+/* Responsive untuk mobile */
+@media (max-width: 768px) {
+    .qris-img {
+        width: 240px !important;
+        padding: 15px !important;
+    }
+    
+    .qris-section button {
+        width: 240px !important;
+        padding: 14px 0 !important;
+        font-size: 14px !important;
+    }
+    
+    .qris-info {
+        font-size: 11px;
+    }
+}
+
+/* Untuk layar sangat kecil */
+@media (max-width: 380px) {
+    .qris-img {
+        width: 200px !important;
+        padding: 12px !important;
+    }
+    
+    .qris-section button {
+        width: 200px !important;
+        padding: 12px 0 !important;
+    }
+}
+
+/* ===============================
+   FIX FOTO SAMPING STRUK
+=================================*/
+
+.struk-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    flex-wrap: nowrap; /* supaya tetap sejajar */
+}
+
+.struk-img{
+    width: 320px;          /* ukuran tetap */
+    max-width: 320px;      /* tidak bisa membesar */
+    height: 480px;         /* tinggi tetap */
+    object-fit: cover;
+    border-radius: 18px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+    flex-shrink: 0;        /* tidak ikut stretch */
+}
+
+/* ===============================
+   QRIS CENTER PREMIUM
+=================================*/
+
+.qris-section{
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;      /* Tengah horizontal */
+    justify-content: center;
+    text-align: center;
+    gap: 20px;                /* Jarak foto & tombol */
+}
+
+/* FOTO QRIS LEBIH BESAR */
+.qris-img{
+    width: 320px;             /* Dibesarin */
+    max-width: 90%;
+    border-radius: 25px;
+    padding: 20px;
+    background: white;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.5);
+    transition: 0.3s ease;
+}
+
+.qris-img:hover{
+    transform: scale(1.03);
+}
+
+/* TOMBOL DI BAWAH FOTO */
+.qris-section button{
+    width: 260px;
+    padding: 14px 0;
+    border-radius: 50px;
+    border: none;
+    background: linear-gradient(135deg,#3b82f6,#2563eb);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.qris-section button:hover{
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px rgba(59,130,246,0.4);
+}
+
+/* MOBILE */
+@media (max-width:768px){
+    .qris-img{
+        width: 260px;
+    }
+
+    .qris-section button{
+        width: 100%;
+        max-width: 260px;
+    }
+}
+
+/* FORCE QRIS STYLE FIX */
+
+.qris-section{
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    text-align: center;
+}
+
+#qrisSection img{
+    width: 340px !important;
+    max-width: 90% !important;
+    border-radius: 25px !important;
+    padding: 20px !important;
+    background: white !important;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.5) !important;
+}
+
+#qrisSection button{
+    width: 260px !important;
+    padding: 14px 0 !important;
+    border-radius: 50px !important;
+}
+
+/* ================= ULTRA PREMIUM LOGIN FIX ================= */
+.login-page {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at top left,#1e3a8a,#0f172a 60%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    overflow: hidden;
+    touch-action: none; /* Mencegah scroll yang tidak diinginkan di login */
+}
+
+/* Dekorasi cahaya - Ditambah pointer-events: none agar tidak menghalangi klik */
+.login-page::before,
+.login-page::after {
+    content: "";
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    filter: blur(150px);
+    opacity: 0.2;
+    animation: floatLight 20s infinite alternate ease-in-out;
+    pointer-events: none; /* PENTING: Supaya klik jari tembus ke input */
+    z-index: 1;
+}
+
+.login-box {
+    position: relative;
+    z-index: 10; /* Pastikan box di atas cahaya */
+    width: 360px;
+    max-width: 90%; /* Agar tidak terpotong di layar HP kecil */
+    padding: 40px 30px;
+    border-radius: 35px;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+    border: 1px solid rgba(255,255,255,0.15);
+    box-shadow: 0 50px 100px rgba(0,0,0,0.6);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+}
+/* Logo */
+.login-logo{
+    width:70px;
+    height:70px;
+    border-radius:50%;
+    background: linear-gradient(135deg,#3b82f6,#2563eb);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-weight:700;
+    font-size:22px;
+    box-shadow:0 20px 40px rgba(59,130,246,.4);
+}
+
+/* Title */
+.login-box h2{
+    margin:5px 0 0 0;
+    font-weight:600;
+}
+
+.login-sub{
+    font-size:13px;
+    opacity:.7;
+    margin-bottom:10px;
+}
+
+/* Input */
+.login-box input {
+    width: 100%;
+    padding: 14px 20px;
+    border-radius: 50px;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.1);
+    color: white;
+    outline: none;
+    text-align: center;
+    font-size: 16px; /* Standar mobile agar tidak auto-zoom */
+    position: relative;
+    z-index: 11;
+}
+
+.login-box input:focus{
+    border-color:#3b82f6;
+    box-shadow:0 0 15px rgba(59,130,246,.5);
+}
+
+/* Button */
+.login-box button{
+    width:100%;
+    padding:14px;
+    border-radius:50px;
+    border:none;
+    font-weight:600;
+    cursor:pointer;
+    background: linear-gradient(135deg,#22c55e,#16a34a);
+    color:white;
+    transition:.3s;
+}
+
+.login-box button:hover{
+    transform:translateY(-3px);
+    box-shadow:0 20px 40px rgba(34,197,94,.4);
+}
+
+/* ================= FIX LOGOUT BUTTON ================= */
+
+.logout-btn{
+    padding: 10px 20px;
+    border-radius: 50px;
+    border: none;
+    background: linear-gradient(135deg,#ef4444,#dc2626);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .3s ease;
+}
+
+.logout-btn:hover{
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px rgba(239,68,68,0.4);
+}
+
+.logout-btn:active{
+    transform: scale(0.95);
+}
+
+/* ================= PREMIUM DELETE BUTTON ================= */
+
+.delete-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(239,68,68,0.15);
+    color: #ef4444;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all .25s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto; /* Tambahkan baris ini agar tombol berada persis di tengah */
+}
+
+.delete-btn:hover{
+    background: linear-gradient(135deg,#ef4444,#dc2626);
+    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 10px 25px rgba(239,68,68,0.4);
+}
+
+.delete-btn:active{
+    transform: scale(0.9);
+}
+
+/* Menyejajarkan judul struk ke kiri */
+.struk-card h2 {
+    text-align: left;
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+}
+
+/* ===============================
+   FLOATING SHAPES BACKGROUND
+=================================*/
+
+.floating-shapes {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.shape {
+    position: absolute;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(147, 51, 234, 0.2));
+    border-radius: 50%;
+    filter: blur(40px);
+    animation: float 20s infinite ease-in-out;
+}
+
+.shape-1 {
+    width: 500px;
+    height: 500px;
+    top: -200px;
+    left: -200px;
+    animation-delay: 0s;
+}
+
+.shape-2 {
+    width: 400px;
+    height: 400px;
+    bottom: -150px;
+    right: -150px;
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(59, 130, 246, 0.15));
+    animation-delay: 2s;
+    animation-duration: 25s;
+}
+
+.shape-3 {
+    width: 300px;
+    height: 300px;
+    top: 30%;
+    right: 10%;
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(147, 51, 234, 0.15));
+    animation-delay: 4s;
+    animation-duration: 18s;
+}
+
+.shape-4 {
+    width: 250px;
+    height: 250px;
+    bottom: 20%;
+    left: 15%;
+    background: linear-gradient(135deg, rgba(249, 115, 22, 0.15), rgba(234, 179, 8, 0.15));
+    animation-delay: 6s;
+    animation-duration: 22s;
+}
+
+.shape-5 {
+    width: 200px;
+    height: 200px;
+    top: 60%;
+    left: 40%;
+    background: linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(59, 130, 246, 0.15));
+    animation-delay: 8s;
+    animation-duration: 15s;
+}
+
+.shape-6 {
+    width: 350px;
+    height: 350px;
+    top: 10%;
+    left: 20%;
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(236, 72, 153, 0.15));
+    animation-delay: 10s;
+    animation-duration: 28s;
+}
+
+@keyframes float {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 0.3;
+    }
+    25% {
+        transform: translate(50px, 30px) scale(1.1);
+        opacity: 0.5;
+    }
+    50% {
+        transform: translate(20px, -40px) scale(0.9);
+        opacity: 0.4;
+    }
+    75% {
+        transform: translate(-40px, 20px) scale(1.2);
+        opacity: 0.6;
+    }
+    100% {
+        transform: translate(0, 0) scale(1);
+        opacity: 0.3;
+    }
+}
+
+/* Sesuaikan z-index container */
+.container {
+    position: relative;
+    z-index: 1;
+}
+
+.login-page {
+    z-index: 2;
+}
