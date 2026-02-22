@@ -772,4 +772,12 @@ body::after{
 
 .delete-btn:active{
     transform: scale(0.9);
+
+}
+
+/* Menyejajarkan judul struk ke kiri */
+.struk-card h2 {
+    text-align: left;
+    margin-bottom: 10px;
+    font-size: 1.5rem;
 }
