@@ -311,9 +311,6 @@ function generateStruk(uang, kembali, data, metode) {
     
     // Tampilkan struk container
     strukContainer.style.display = "flex";
-    
-    // Scroll otomatis ke struk
-    strukContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
 function tutupStruk() {
@@ -428,4 +425,5 @@ document.querySelectorAll('input[name="metode"]').forEach(r => {
 
 // Render awal
 renderTable();
+
 updateLaporan();
