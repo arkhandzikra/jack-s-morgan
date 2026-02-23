@@ -1278,4 +1278,83 @@ h3{
 
 .login-page {
     z-index: 2;
+
+}
+
+/* ===============================
+   FIX: Pastikan semua elemen interaktif bisa diklik
+=================================*/
+
+/* Pastikan container dan semua isinya bisa diklik */
+.container,
+.container *,
+.struk-container,
+.struk-container *,
+.login-page,
+.login-page *,
+button,
+input,
+label,
+.qris-section,
+.qris-section * {
+    pointer-events: auto;
+    position: relative;
+    z-index: 10;
+}
+
+/* Floating shapes tidak boleh mengganggu klik */
+.floating-shapes {
+    pointer-events: none !important;
+}
+
+.floating-shapes * {
+    pointer-events: none !important;
+}
+
+/* Pastikan login page di atas segalanya */
+.login-page {
+    z-index: 9999 !important;
+}
+
+/* Pastikan tombol QRIS dan bayar bisa diklik */
+#qrisSection button,
+.bayar-section button,
+.menu-buttons button,
+.action-buttons button,
+.tutup-struk-btn,
+.logout-btn,
+.delete-btn {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    position: relative;
+    z-index: 20;
+}
+
+/* Pastikan input bisa diketik */
+input,
+#uangBayar,
+#username,
+#pin {
+    pointer-events: auto !important;
+    position: relative;
+    z-index: 20;
+}
+
+/* Perbaiki container utama */
+.container {
+    position: relative;
+    z-index: 100;
+    pointer-events: auto;
+}
+
+/* Pastikan struk container tidak menghalangi */
+.struk-container {
+    position: relative;
+    z-index: 200;
+}
+
+/* Hapus pointer-events: none dari body::before dan body::after */
+body::before,
+body::after {
+    pointer-events: none !important;
 }
